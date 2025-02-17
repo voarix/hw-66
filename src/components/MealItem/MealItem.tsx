@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axiosApi from "../../axiosApi.ts";
+import ButtonSpinner from "../../UI/ButtonSpinner.tsx";
 
 interface Props {
   time: string;
@@ -9,7 +11,20 @@ interface Props {
 }
 
 const MealItem: React.FC<Props> = ({time, dish, calories, idMeal}) => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const onDeleteMeal = async () => {
+    try {
+      setLoading(true);
+      await axiosApi.delete(`meals/${idMeal}.json`);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="row mb-3 p-3 border rounded shadow bg-light">
@@ -31,8 +46,12 @@ const MealItem: React.FC<Props> = ({time, dish, calories, idMeal}) => {
         </div>
 
         <div className="row ms-5">
-          <button type="button" className="btn btn-primary mb-2" onClick={() => navigate(`/edit/${idMeal}`)}>Edit</button>
-          <button type="button" className="btn btn-danger">Delete</button>
+          <button type="button" className="btn btn-primary mb-2" onClick={() => navigate(`/edit/${idMeal}`)}>Edit
+          </button>
+          <button type="button" className="btn btn-danger" onClick={onDeleteMeal} disabled={loading}>
+            Удалить
+            {loading && <ButtonSpinner/>}
+          </button>
         </div>
       </div>
     </div>
