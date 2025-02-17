@@ -2,16 +2,17 @@ import { useState } from "react";
 import { IMealForm } from "../../types";
 import axiosApi from "../../axiosApi.ts";
 import MealForm from "../../components/MealForm/MealForm.tsx";
-import Loader from "../../UI/Loader.tsx";
+import { useNavigate } from "react-router-dom";
 
 const NewMeal = () => {
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
 
   const onSubmitAddNewMeal = async (newMeal: IMealForm) => {
     try {
       setLoading(true);
       await axiosApi.post('meals.json', newMeal);
+      navigate('/');
     } catch (error) {
       console.error(error);
     } finally {
@@ -19,14 +20,10 @@ const NewMeal = () => {
     }
   };
 
-  let form = (<MealForm onSubmitAdd={onSubmitAddNewMeal}/>);
-
-  if (loading) form = <Loader/>;
-
   return (
     <div>
-      <h1>Submit new meal</h1>
-      {form}
+      <h3 className='mb-5 text-center'>Submit new meal</h3>
+      <MealForm onSubmitAdd={onSubmitAddNewMeal} isLoading={loading} />
     </div>
   );
 };

@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { IMealForm } from "../../types";
 import axiosApi from "../../axiosApi.ts";
+import ButtonSpinner from "../../UI/ButtonSpinner.tsx";
+import Spinner from "react-bootstrap/Spinner";
 
 interface MealFormData {
   isEdit?: boolean;
   idMeal?: string;
   onSubmitAdd: (quote: IMealForm) => void;
+  isLoading?: boolean;
 }
 
 const initialForm : IMealForm= {
@@ -15,14 +18,13 @@ const initialForm : IMealForm= {
 };
 
 
-const MealForm: React.FC<MealFormData> = ({isEdit = false, idMeal, onSubmitAdd}) => {
+const MealForm: React.FC<MealFormData> = ({isEdit = false, idMeal, onSubmitAdd, isLoading }) => {
   const [form, setForm] = useState<IMealForm>(initialForm);
-  const [loading, setLoading] = useState(false);
-
+  const [getOneMealLoading, setGetOneMealLoading] = useState(false);
 
   const fetchOnePost = useCallback(async () => {
     try {
-      setLoading(true);
+      setGetOneMealLoading(true);
       const response = await axiosApi(`meals/${idMeal}.json`);
 
       if (!response.data) {
@@ -32,7 +34,7 @@ const MealForm: React.FC<MealFormData> = ({isEdit = false, idMeal, onSubmitAdd})
     } catch (e) {
       console.error(e);
     } finally {
-      setLoading(false);
+      setGetOneMealLoading(false);
     }
   }, [idMeal]);
 
@@ -58,7 +60,7 @@ const MealForm: React.FC<MealFormData> = ({isEdit = false, idMeal, onSubmitAdd})
 
   return (
     <>
-      <div className="mb-4">
+      {getOneMealLoading ? <Spinner /> : <div className="mb-4">
         <div className="card h-100 border-0 shadow-sm">
           <div className="card-body p-4">
             <h2 className="mb-4">{isEdit ? "Edit" : "Add new"} meal</h2>
@@ -74,6 +76,7 @@ const MealForm: React.FC<MealFormData> = ({isEdit = false, idMeal, onSubmitAdd})
                   id="time"
                   value={form.time}
                   onChange={onChangeInputMessage}
+                  disabled={isLoading}
                 >
                   <option value="" disabled>
                     Choose category
@@ -86,6 +89,7 @@ const MealForm: React.FC<MealFormData> = ({isEdit = false, idMeal, onSubmitAdd})
               </div>
               <div className="mb-3">
                 <input
+                  disabled={isLoading}
                   type="text"
                   className="form-control"
                   placeholder="Meal description"
@@ -100,19 +104,21 @@ const MealForm: React.FC<MealFormData> = ({isEdit = false, idMeal, onSubmitAdd})
               <input
                 type="number"
                 className="form-control"
+                disabled={isLoading}
                 required
                 name="calories"
                 id="calories"
                 value={form.calories}
                 onChange={onChangeInputMessage}
               />
-              <button type="submit" className="btn btn-primary mt-3">
+              <button type="submit" disabled={isLoading} className="btn btn-primary mt-3">
                 {isEdit ? "Edit" : "Add"}
+                {isLoading && <ButtonSpinner />}
               </button>
             </form>
           </div>
         </div>
-      </div>
+      </div>}
     </>
   );
 };

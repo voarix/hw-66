@@ -13,8 +13,10 @@ const MealItem: React.FC<Props> = ({time, dish, calories}) => {
         <p className="mb-4 text-muted">
           {time}
         </p>
-        <p className="mb-0">
-          {dish}
+        <p>
+          <strong>
+            {dish}
+          </strong>
         </p>
       </div>
       <div className="col-md-6 d-flex align-items-center justify-content-end">
