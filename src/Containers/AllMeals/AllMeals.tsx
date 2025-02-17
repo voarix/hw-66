@@ -3,10 +3,12 @@ import axiosApi from "../../axiosApi.ts";
 import { IMeal, IMealApi } from "../../types";
 import MealItem from "../../components/MealItem/MealItem.tsx";
 import Loader from "../../UI/Loader.tsx";
+import { useNavigate } from "react-router-dom";
 
 const AllMeals = () => {
   const [meals, setMeals] = useState<IMeal[]>([]);
   const [loader, setLoader] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const fetchAllMeals = useCallback(async () => {
     try {
@@ -54,6 +56,9 @@ const AllMeals = () => {
 
   return (
     <div>
+      <div className='mb-5'>
+        <button type='button' className='btn btn-primary' onClick={() => navigate('/meals/new-meal')}>Add new  meal</button>
+      </div>
       {content}
     </div>
   );
