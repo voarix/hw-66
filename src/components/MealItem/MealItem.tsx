@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosApi from "../../axiosApi.ts";
 import ButtonSpinner from "../../UI/ButtonSpinner.tsx";
+import { IMealForm } from "../../types";
 
 interface Props {
   time: string;
@@ -24,7 +25,7 @@ const MealItem: React.FC<Props> = ({
   const onDeleteMeal = async () => {
     try {
       setLoading(true);
-      await axiosApi.delete(`meals/${idMeal}.json`);
+      await axiosApi.delete<IMealForm>(`meals/${idMeal}.json`);
       deleteMeal();
     } catch (error) {
       console.error(error);

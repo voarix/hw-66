@@ -7,7 +7,7 @@ import Spinner from "react-bootstrap/Spinner";
 interface MealFormData {
   isEdit?: boolean;
   idMeal?: string;
-  onSubmitAdd: (quote: IMealForm) => void;
+  onSubmitAdd: (meal: IMealForm) => void;
   isLoading?: boolean;
 }
 
@@ -24,13 +24,12 @@ const MealForm: React.FC<MealFormData> = ({
   isLoading,
 }) => {
   const [form, setForm] = useState<IMealForm>(initialForm);
-  const [getOneMealLoading, setGetOneMealLoading] = useState(false);
+  const [getOneMealLoading, setGetOneMealLoading] = useState<boolean>(false);
 
   const fetchOnePost = useCallback(async () => {
     try {
       setGetOneMealLoading(true);
-      const response = await axiosApi(`meals/${idMeal}.json`);
-
+      const response = await axiosApi<IMealForm>(`meals/${idMeal}.json`);
       if (!response.data) {
         return;
       }

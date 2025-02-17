@@ -5,13 +5,13 @@ import { IMealForm } from "../../types";
 import MealForm from "../../components/MealForm/MealForm.tsx";
 
 const EditMeal = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const { idMeal } = useParams();
 
   const onSubmitAddNewMeal = async (meal: IMealForm) => {
     try {
       setLoading(true);
-      await axiosApi.put(`meals/${idMeal}.json`, meal);
+      await axiosApi.put<IMealForm>(`meals/${idMeal}.json`, meal);
     } catch (error) {
       console.error(error);
     } finally {

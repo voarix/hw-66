@@ -5,13 +5,13 @@ import MealForm from "../../components/MealForm/MealForm.tsx";
 import { useNavigate } from "react-router-dom";
 
 const NewMeal = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const onSubmitAddNewMeal = async (newMeal: IMealForm) => {
     try {
       setLoading(true);
-      await axiosApi.post("meals.json", newMeal);
+      await axiosApi.post<IMealForm>("meals.json", newMeal);
       navigate("/");
     } catch (error) {
       console.error(error);
