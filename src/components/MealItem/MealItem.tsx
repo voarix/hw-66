@@ -8,9 +8,10 @@ interface Props {
   dish: string;
   calories: number;
   idMeal: string;
+  deleteMeal: () => void;
 }
 
-const MealItem: React.FC<Props> = ({time, dish, calories, idMeal}) => {
+const MealItem: React.FC<Props> = ({time, dish, calories, idMeal, deleteMeal}) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ const MealItem: React.FC<Props> = ({time, dish, calories, idMeal}) => {
     try {
       setLoading(true);
       await axiosApi.delete(`meals/${idMeal}.json`);
-      navigate("/");
+      deleteMeal();
     } catch (error) {
       console.error(error);
     } finally {

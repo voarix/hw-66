@@ -10,6 +10,10 @@ const AllMeals = () => {
   const [loader, setLoader] = useState<boolean>(false);
   const navigate = useNavigate();
 
+  const deleteMeal = (idMeal: string) => {
+    setMeals((prev) => prev.filter(meal => meal.id !== idMeal));
+  };
+
   const fetchAllMeals = useCallback(async () => {
     try {
       setLoader(true);
@@ -42,7 +46,7 @@ const AllMeals = () => {
   const mealsContent = (
     <>
       {meals.length ?
-        meals.map((meal) => (<MealItem time={meal.time} key={meal.id} dish={meal.text} calories={meal.calories} idMeal={meal.id}/>)) :
+        meals.map((meal) => (<MealItem deleteMeal={() => deleteMeal(meal.id)} time={meal.time} key={meal.id} dish={meal.text} calories={meal.calories} idMeal={meal.id}/>)) :
         <p>No meals yet</p>
       }
     </>
