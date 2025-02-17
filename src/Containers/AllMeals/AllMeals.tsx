@@ -42,7 +42,7 @@ const AllMeals = () => {
   const mealsContent = (
     <>
       {meals.length ?
-        meals.map((meal) => (<MealItem time={meal.time} key={meal.id} dish={meal.text} calories={meal.calories}/>)) :
+        meals.map((meal) => (<MealItem time={meal.time} key={meal.id} dish={meal.text} calories={meal.calories} idMeal={meal.id}/>)) :
         <p>No meals yet</p>
       }
     </>

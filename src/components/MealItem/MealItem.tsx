@@ -1,12 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   time: string;
   dish: string;
   calories: number;
+  idMeal: string;
 }
 
-const MealItem: React.FC<Props> = ({time, dish, calories}) => {
+const MealItem: React.FC<Props> = ({time, dish, calories, idMeal}) => {
+  const navigate = useNavigate();
+
   return (
     <div className="row mb-3 p-3 border rounded shadow bg-light">
       <div className="col-md-6">
@@ -27,7 +31,7 @@ const MealItem: React.FC<Props> = ({time, dish, calories}) => {
         </div>
 
         <div className="row ms-5">
-          <button type="button" className="btn btn-primary mb-2">Edit</button>
+          <button type="button" className="btn btn-primary mb-2" onClick={() => navigate(`/edit/${idMeal}`)}>Edit</button>
           <button type="button" className="btn btn-danger">Delete</button>
         </div>
       </div>
