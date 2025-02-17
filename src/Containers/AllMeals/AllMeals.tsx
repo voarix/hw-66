@@ -11,7 +11,7 @@ const AllMeals = () => {
   const navigate = useNavigate();
 
   const deleteMeal = (idMeal: string) => {
-    setMeals((prev) => prev.filter(meal => meal.id !== idMeal));
+    setMeals((prev) => prev.filter((meal) => meal.id !== idMeal));
   };
 
   const fetchAllMeals = useCallback(async () => {
@@ -45,23 +45,42 @@ const AllMeals = () => {
 
   const mealsContent = (
     <>
-      {meals.length ?
-        meals.map((meal) => (<MealItem deleteMeal={() => deleteMeal(meal.id)} time={meal.time} key={meal.id} dish={meal.text} calories={meal.calories} idMeal={meal.id}/>)) :
+      {meals.length ? (
+        meals.map((meal) => (
+          <MealItem
+            deleteMeal={() => deleteMeal(meal.id)}
+            time={meal.time}
+            key={meal.id}
+            dish={meal.text}
+            calories={meal.calories}
+            idMeal={meal.id}
+          />
+        ))
+      ) : (
         <p>No meals yet</p>
-      }
+      )}
     </>
   );
 
-  const content = (
-    <>
-      {loader ? <Loader/> : mealsContent}
-    </>
-  );
+  const content = <>{loader ? <Loader /> : mealsContent}</>;
+
+  const totalCaloriesFunc = () => {
+    return meals.reduce((acc, meal) => Number(meal.calories) + acc, 0);
+  };
 
   return (
     <div>
-      <div className='mb-5'>
-        <button type='button' className='btn btn-primary' onClick={() => navigate('/meals/new-meal')}>Add new  meal</button>
+      <div className="mb-5 d-flex justify-content-between align-items-center">
+        <p>
+          <strong>Total calories: {totalCaloriesFunc()}</strong>
+        </p>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => navigate("/meals/new-meal")}
+        >
+          Add new meal
+        </button>
       </div>
       {content}
     </div>

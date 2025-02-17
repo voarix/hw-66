@@ -6,7 +6,7 @@ import MealForm from "../../components/MealForm/MealForm.tsx";
 
 const EditMeal = () => {
   const [loading, setLoading] = useState(false);
-  const {idMeal} = useParams();
+  const { idMeal } = useParams();
 
   const onSubmitAddNewMeal = async (meal: IMealForm) => {
     try {
@@ -17,12 +17,16 @@ const EditMeal = () => {
     } finally {
       setLoading(false);
     }
-    console.log(meal);
   };
 
   return (
     <div>
-      <MealForm onSubmitAdd={onSubmitAddNewMeal} isLoading={loading} isEdit={true} idMeal={idMeal} />
+      <MealForm
+        onSubmitAdd={onSubmitAddNewMeal}
+        isLoading={loading}
+        isEdit={true}
+        idMeal={idMeal}
+      />
     </div>
   );
 };

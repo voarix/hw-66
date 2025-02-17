@@ -11,8 +11,8 @@ const NewMeal = () => {
   const onSubmitAddNewMeal = async (newMeal: IMealForm) => {
     try {
       setLoading(true);
-      await axiosApi.post('meals.json', newMeal);
-      navigate('/');
+      await axiosApi.post("meals.json", newMeal);
+      navigate("/");
     } catch (error) {
       console.error(error);
     } finally {
@@ -22,7 +22,7 @@ const NewMeal = () => {
 
   return (
     <div>
-      <h3 className='mb-5 text-center'>Submit new meal</h3>
+      <h3 className="mb-5 text-center">Submit new meal</h3>
       <MealForm onSubmitAdd={onSubmitAddNewMeal} isLoading={loading} />
     </div>
   );
