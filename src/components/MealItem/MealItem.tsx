@@ -54,6 +54,7 @@ const MealItem: React.FC<Props> = ({
             onClick={() => navigate(`/edit/${idMeal}`)}
           >
             Edit
+            {loading && <ButtonSpinner />}
           </button>
           <button
             type="button"

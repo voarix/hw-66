@@ -20,7 +20,8 @@ const App = () => {
           <Route path="/" element={<AllMeals />} />
           <Route path="/meals" element={<AllMeals />} />
           <Route path="/meals/new-meal" element={<NewMeal />} />
-          <Route path="/edit/:idMeal" element={<EditMeal />} />
+          <Route path="/edit/:idMeal" element={<EditMeal />} />\
+          <Route path="*" element={<h1>No found page</h1>} />
         </Routes>
       </main>
     </>
